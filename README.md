@@ -7,6 +7,8 @@
 
 **选项式API**
 
+选项式API以组件实例的概念为中心，即上述实例中的this
+
 ```html
 <template>
 <div class="box" @click="changeMsg">{{msg}}</div>
@@ -37,6 +39,9 @@ export default{
 ```
 
 **组合式API**
+
+组合式API的核心思想是直接在函数作用域内定义响应式状态变量，并将多个函数中得到的状态组合起来处理
+复杂问题，这种形式更加自由
 
 ```html
 <template>
@@ -180,3 +185,56 @@ model是js对象,view负责显示
 一个网站可能有多个区域，每个区域都是由一个vue组件构成
 一个网页就是一个组件树
 
+### 3、vue实例
+
+组合式api里面怎么获取到vue的实例
+
+可以通过getCurrentInstance获取当前vue的实例
+
+
+### 4、响应式原理
+
+响应式指的就是model(数据)有变化的时候，能反馈到view上,当然这个反馈是由view实例来帮我们完成的，那
+view怎么知道model有变化
+
+答案之一是:js Proxy,其行为表现与一般对象相似，不同之处在于Vue能够跟踪对响应式对象property
+的访问与更改操作
+
+当修改proxy的时候，它会调用一个set方法，修改proxy属性并不会立即去更新，而是先调用这个set方法
+这个set方法里我们可以定义一些自己的操作
+
+vue通过这个proxy来封装响应机制，这样就能追踪属性的变化
+
+vue提供的一个构造函数用于初始化原始对象，这样vue才能跟踪数据的变化
+vue提供一个reactive函数
+
+```javascript
+function reactive(obj){
+    return new Proxy(obj,{
+        get(target,key){
+            track(target,key)
+            return target[key]
+        },
+
+        set(target,key,value){
+            trigger(target,key)
+            target[key]=value
+        }
+    })
+}
+```
+
+ref用于生成一个响应式变量
+而reactive它可以将一个对象变成响应式的对象
+
+```javascript
+let persion=reactive({name:"zhangsan"});
+```
+
+**getter/setters**
+
+Proxy仅对对象类型有效(对象,数组和map、Set这样的集合操作)
+而对string、number和bool这样的原始类型无效
+
+为了解决这样的限制，vue提供了一个ref()方法来允许我们创建可以使用任何值类型的响应式ref
+ref利用的是js的getter/setters的方式劫持属性访问
