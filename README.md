@@ -238,3 +238,144 @@ Proxy仅对对象类型有效(对象,数组和map、Set这样的集合操作)
 
 为了解决这样的限制，vue提供了一个ref()方法来允许我们创建可以使用任何值类型的响应式ref
 ref利用的是js的getter/setters的方式劫持属性访问
+
+```javascript
+function ref(value){
+    const refObject={
+        get value(){
+            track(refObject,'value')
+            return value
+        },
+        set  value(newValue){
+            trigger(refObject,'value')
+            value=newValue
+        }
+    }
+    return refObject
+}
+```
+
+向上面我们如果不使用对象，而是使用一个字符串，就需要使用ref来声明一个响应式变量
+
+**setup语法**
+
+```html
+<script>
+
+// 以库的形式来使用vue实例提供的API
+
+import {reactive} from 'vue';
+
+export  default{
+    //setup是一个专门用于组合式API的特殊钩子
+    setup(){
+        //暴露数据到模板
+        return {}
+    }
+}
+
+</script>
+```
+
+我们可以通过使用构建工具来简化该操作，当使用单文件组件时(SFC)时，我们可以使用<script setup>来简化大量模板代码
+
+```html
+<script setup>
+
+// 以库的形式来使用vue实例提供的API
+
+import {ref} from "vue";
+
+// 使用ref来为基础类型构建响应式变量
+
+const name=ref("zhangsan");
+
+// 通过value来设置基础类型的值(setter方式)
+
+name.value="里斯";
+
+</script>
+```
+
+大多数vue的开发者在开发应用时都会基于单文件组件+<script setup>的语法方式，这也是我们后面常见的写法
+
+**DOM异步更新**
+
+注意这是一个重要的概念，当你响应式数据发生变化时，DOM也会自动更新，但是这个更新并不是同步的，而是异步的，vue会将你的变更放到一个缓冲队列，等待更新周期到达时，一次完成DOM的更新
+
+vue在跟踪到响应式数据发生变化的时候，并不是同步更新DOM的
+,当下次更新周期到来时，会reflsh一下dom,刷新之后会调一下nextTick,表明dom已经刷新，如果需要获取数据，那么在这里设置钩子函数获取
+```html
+<script setup>
+import {onMounted}  from 'vue';
+
+// 使用ref来为基础类型构造响应式变量
+
+let name= $ref("zhangsan");
+
+// 只有等模板挂载好之后，我们才能获取到对应的HTML元素
+
+onMounted()=>{
+    // 通过value来设置 基础类型的值(setter)
+    name="lisi";
+    console.log(document.getElementById('name').innerText);
+};
+</script>
+```
+
+由于修改name后，没有立即更新dom，所以获取到的name依然是初始值，那如果想要获取到当前值怎么办?
+
+vue在dom更新时，为我们提供了一个钩子函数nextTick()
+
+该钩子就是当vue实例到达更新周期后，完成dom后，留给我们操作的口子，因此我们改造下
+
+```html
+<script setup>
+import {nextTick,onMounted}  from 'vue';
+
+// 使用ref来为基础类型构造响应式变量
+
+let name= $ref("zhangsan");
+
+// 只有等模板挂载好之后，我们才能获取到对应的HTML元素
+
+onMounted()=>{
+    // 通过value来设置 基础类型的值(setter)
+    name="lisi";
+    // 等待vue下次更新到来后，执行下面的操作
+
+    nextTick(()=>{
+        console.log(document.getElementById('name').innerText);
+    });
+};
+</script>
+```
+
+**深层响应性**
+
+通过上面的我们知道reactive初始化的Proxy对象是响应式的，那如果我在这个对象里面再嵌套对象，那嵌套的对象还是不是响应式的?
+
+依然是响应式的
+当动态的更新reactive初始化的对象的时候，也能动态的响应
+这就是深层响应性
+
+大部分时候，这种深层响应性都是我们所期望的
+
+但是当一个对象很大的时候，嵌套很复杂的时候，这种深层的响应模式可能引发一些性能问题，这个时候我们可以使用ve提供的shallowReactive创建一个浅层响应式的数据
+
+```javascript
+// 使用shallowReactive构造浅层响应式的数据，当数据有变化时，不会立即反馈到界面上
+
+let person=shallowReactive({
+    name:'zhangsan',
+    profile:{city:"北京"},
+    skills:["Golang","vue"]
+})
+```
+
+**ref vs reactive**
+
+reactive能构造的，ref都能构造
+
+使用ref的时候，需要注意使用value
+
