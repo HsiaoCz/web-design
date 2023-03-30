@@ -484,3 +484,10 @@ import MyCompount from './App.vue'
 
 app.component("MyComponent",MyComponent)
 ```
+
+**侦听器**
+
+一个简单的需求：我们一个页面有多个参数，用户可能把url copy给别人，我们需要不同的url看到的页面不同，不然用户每次看到这个页面都是第一个页面
+
+这个就需要我们监听url参数的变化，然后视图做调整，vue-router会有一个全局属性:$route.我们可以监听他的变化
+
