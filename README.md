@@ -422,5 +422,65 @@ vue的响应性语法糖为我们提供了编译时的转换过程，在setup语
 </script>
 
 <!-- 视图模板，由html和自定义组件或者web组件提供能力 -->
+<template>
+<p>{{name}}</p>
+
+<!-- 元素样式，由css提供能力 -->
+
+<style>
+
+</style>
 ```
 
+很显然，该文件并不是一个合法的html文件，并不能被浏览器直接加载，它是一种特殊的文件格式，定义该文件的语法被叫做SFC语法
+
+该语法需要被转换成标准的HTML文件才能被浏览器加载 @vue/compiler-sfc就是用于干这个事情的，当然它不是独立工作的
+.vite提供了构建功能,vue以插件的形式提供sfc语法转换逻辑
+
+一个编译后的sfc是一个标准的javascript模块，这也意味着通过设当的构建配置，你可以像导入其他ES模块一样导入SFC
+
+
+**定义组件**
+
+我们分别定义:
+- script:js逻辑
+- template：视图模板
+- style：样式
+
+```html
+<script setup>
+
+import { ref } from "vue";
+
+const count=ref(0);
+</script>
+
+<template>
+<button @onclick="count++"> you clicked me {{count}} times </button>
+
+<style scoped>
+</style>
+</template>
+```
+scoped表示这个样式只对当前组件有效
+
+**使用组件**
+
+可以使用import来导入组件
+
+```html
+<!-- 通过<script setup>导入的组件都在模板中直接使用 -->
+
+import ButtonCounter from "@/components/ButtonCounter.vue";
+```
+
+**组件注册**
+
+像上面那样直接使用时局部导入
+也可以全局注册一个组件，使得他在当前应用中的任何组件上都可以使用，不需要额外导入
+
+```vue
+import MyCompount from './App.vue'
+
+app.component("MyComponent",MyComponent)
+```
