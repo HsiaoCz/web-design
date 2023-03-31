@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+    // v-for 不仅可以绑定数组，还可以绑定对象
+    // v-for还可以循环数字
+    // 当有v-for和v-if在一个标签的时候，v-for的优先级高于v-if
+    // 可以使用tempalte标签，不渲染到页面，只负责业务逻辑
+    // 绑定key值，这样每次只渲染改变的键值
+    const app = Vue.CreateApp({
+
+        data(){
+           return{
+            listArray:['谢大脚','刘英','晓红']
+           }
+        },
+
+        methods:{
+            handleChangeBtn(){
+                this.listArray.push("hello")
+            }
+        },
+        template:
+        `
+        <ul>
+            <li v-for="(item,index) in listArray" :key="item+index">[{{index}}]{{item}}</li>
+            <button @click="handleChangeBtn">点击改变</button>
+        </ul>
+        `
+    })
+    app.mount('#app')
+</script>
+
+</html>

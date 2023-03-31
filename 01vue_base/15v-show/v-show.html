@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+    // v-show 控制css样式来控制显示，并没有重新渲染
+    // v-if 控制的是dom
+    // v-if 更加灵活 v-show只能控制显示与否
+    const app = Vue.CreateApp({
+        data() {
+            return {
+                show: false
+            }
+        },
+        template: '<div v-show="show">Hello World!</div>'
+    })
+    app.mount('#app')
+</script>
+
+</html>
