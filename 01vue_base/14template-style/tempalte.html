@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+    const ap = Vue.CreateApp({
+        //  css的样式绑定，三种方式
+        // 字符串的形式绑定，对象的形式，通过数组的方式进行绑定
+        data() {
+            return {
+                classString: 'red',
+                classObject: { red: false, background: true },
+                classArray: ['green', 'background'],
+            }
+        },
+
+        template: '<div>Hello World!</div>'
+    })
+    app.mount('#app')
+</script>
+
+
+<style>
+    .red {
+        color: red;
+    }
+
+    .green {
+        color: green;
+    }
+
+    .background {
+        background-color: orange;
+    }
+</style>
+
+</html>
