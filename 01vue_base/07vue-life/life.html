@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+    // 生命周期函数 在某一时刻会自动执行的函数
+    // beforeCreate() 在实例生成之前会执行
+    // created()  在实例生成之后会自动执行的函数
+    
+    // beforeMount(){} 在模板渲染完成之前执行的函数
+    // mounted()  // 在模板渲染完成之后执行的函数
+
+    // beforeUpdate() 在data中的数据有,会自动自动执行的函数
+    // updated() 在data中的数据有变化时，页面重新渲染完成之后执行
+    
+    // beforeMounted() 在vue应用失效时，会自动执行
+    // unmounted() 在vue应用失效时，且dom完全销毁之后执行的函数
+    const app = Vue.createApp({
+        data() {
+            return {
+                message: 'hello'  // 1.这里定义了一个数据，也就是model
+            }
+        },
+        methods: {
+            handleItemClick() {
+                alert('hello world')
+            }
+        },
+        mounted() {
+            alert("hello world")
+        },
+        template: "<h2>{{message}}</h2>"  // 2. 模板 view
+    })
+
+    const vm = app.mount("#app")
+
+    console.log(vm)  // mvvm m model v view vm viewModel
+</script>
+
+</html>
