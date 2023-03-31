@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+    // v-if 可以作条件判断
+    const app = Vue.createApp({
+        data() {
+            return {
+                message: 'hello'  // 1.这里定义了一个数据，也就是model
+            }
+        },
+        methods: {
+            handleItemClick() {
+                alert('hello world')
+            }
+        },
+        mounted() {
+            alert("hello world")
+        },
+        template: `
+        <h2 v-if="message=='www.bilibili.com" class="one">{{message}}</h2>
+        <h2 v-if="message=='www.sanz.com" class="two">{{message}}</h2>
+        <h2 v-if="message=='www.bilib.com" class="three">{{message}}</h2>
+     ` // 2. 模板 view
+    })
+    app.mount("#app")
+</script>
+<style>
+    .one {
+        color: rebeccapurple;
+    }
+
+    .two {
+        color: crimson;
+    }
+
+    .three {
+        color: orange;
+    }
+</style>
+
+</html>

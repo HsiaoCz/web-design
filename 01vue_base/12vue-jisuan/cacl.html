@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+    // 计算属性的特性，当计算属性依赖的内容发生改变时，才会重新执行计算
+    const app = Vue.createApp({
+        data() {
+            return {
+                message: 'hello',  // 1.这里定义了一个数据，也就是model
+                price: 10,
+                count: 2
+            }
+        },
+        computed: {
+            total() {
+                return this.price * this.count
+            }
+        },
+        methods: {
+            handleItemClick() {
+                alert('hello world')
+            },
+            // 使用方法，只要页面重新渲染，就会重新执行方法
+            getTotal() {
+                return data.now()
+            }
+        },
+        template: `
+        <h2>{{message}}</h2>
+        <h2>总和:{{total}}</h2>
+        <h2>总和:{{getTotal()}}</h2>
+        `
+    })
+    app.mount("#app")
+</script>
+<style>
+
+</style>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+    // v-on 可以简写  @
+    // v-bind 简写的方法 :
+    // 阻止默认事件 @click.prevent
+    const app = Vue.createApp({
+        data() {
+            return {
+                message: 'hello', // 1.这里定义了一个数据，也就是model
+                name: 'title1',
+                event: 'click'
+            }
+        },
+        methods: {
+            handleItemClick() {
+                alert('hello world')
+            },
+            handleButton(e) {
+                alert("hello")
+            }
+        },
+        template: `
+        <h2
+        :[name]="message"
+        @:[event]="handleItemClick" 
+        >{{message}}
+    </h2>  // 2. 模板 view
+
+    <form action="https://www.bilibili.com" @click.prevent="handleButton">
+    <button type="submit">submit</button>
+    </form>
+    `
+    })
+    app.mount("#app")
+</script>
+
+</html>
