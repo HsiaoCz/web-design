@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+    // @keydown 键盘按键修饰符
+    // @keydown.enter按下enter键才生效
+    // 鼠标修饰符: left right middle @click.right
+    const app = Vue.CreateApp({
+
+        data() {
+            return {
+                count: 0
+            }
+        },
+
+        methods: {
+            addCount(num,event) {
+                this.count+=num
+                console.log(event.target)
+
+            }
+        },
+        template: `<div>目前的佳丽数量{{count}}</div>
+        <button @click="addCount(2,$event)">增加一位佳丽</button>
+        `
+    })
+
+    app.mount('#app')
+</script>
+
+</html>
