@@ -491,3 +491,68 @@ app.component("MyComponent",MyComponent)
 
 这个就需要我们监听url参数的变化，然后视图做调整，vue-router会有一个全局属性:$route.我们可以监听他的变化
 
+
+### 6、axios
+
+> axios是一个异步的请求技术，核心作用是用来在页面中发送异步请求，并获取对应数据在页面中渲染 页面局部更新技术
+
+**Axios第一个程序**
+
+```html
+<script>这里需要先引入axios</script>
+<script>
+
+    // get方式来请求
+    axios.get("这里是请求的url").then(function(response){
+        console.log(response.data);
+    }).catch(function(err){
+        console.log(err)
+    });
+
+    // post方式的请求
+
+    axios.post("这里写请求的url",{
+        username:"bob",
+        age:12,
+        email:"122@qq.com",
+        phone:1222,
+    }).then(function(response){
+       console.log(response.data)
+    }).catch(function(err){
+        console.log(err)
+    })
+</script>
+
+```
+
+**axios的并发请求**
+
+> 并发请求：将多个请求在同一时刻发送到后端服务接口，最后在集中处理每个请求的响应结果
+
+```html
+<script>
+    // 1.创建一个查询所有的请求
+
+    function findAll(){
+        return axios.get("请求的url")
+    }
+
+    // 2.创建一个保存的请求
+    function  save(){
+        return axios.post("请求的url",{
+        username:"bob",
+        age:12,
+        email:"122@qq.com",
+        phone:1222,
+        });
+    }
+
+
+    // 并发执行
+    // axios.spead用于将一组函数的响应结果汇总处理
+    axios.all(fincAll(),save().then(axios.spead(function(res1,res2){
+        console.log(res1.data);
+        console.log(res2.data);
+    })))
+</script>
+```
