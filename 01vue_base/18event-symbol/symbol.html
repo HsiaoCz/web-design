@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+   // 如果想在模板一次出发两个事件，需要把两个事件用逗号隔开，然后每个事件的事件名要加上括号才能起作用
+   // click.stop阻止冒泡 一个大的div标签里面有点击事件，标签里面有按钮，当点击按钮时，外层的事件也会出现，这就是冒泡
+   // click.self只有点击自己的时候才会触发
+   // prevent capture once passive
+    const app = Vue.CreateApp({
+
+        data() {
+            return {
+                count: 0
+            }
+        },
+
+        methods: {
+            addCount(num,event) {
+                this.count+=num
+                console.log(event.target)
+
+            }
+        },
+        template: `<div>目前的佳丽数量{{count}}</div>
+        <button @click="addCount(2,$event)">增加一位佳丽</button>
+        `
+    })
+
+    app.mount('#app')
+</script>
+
+</html>
