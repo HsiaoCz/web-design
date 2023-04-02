@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.2/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+    // 一个组件本质上是一个拥有预定义选项的vue实例
+
+    // Non-Pops其实就是子组件没有接受父组件传递过来的参数
+    // 而子组件完全不变的复制了属性到自己的标签上，就叫做non-props
+    const app = Vue.createApp({
+        template:
+            `
+        <h2>Hello World</h2>
+        <Hello msg="hello"/>
+        `
+    })
+
+    app.component('Hello', {
+        props:['msg'],
+        template: `<div>Hello World </div>`
+    })
+
+    app.mount("#app")
+</script>
+
+</html>
