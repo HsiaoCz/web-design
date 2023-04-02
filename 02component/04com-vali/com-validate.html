@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.2/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+    // 一个组件本质上是一个拥有预定义选项的vue实例
+    const app = Vue.createApp({
+
+        // 动态传值
+        data() {
+            return {
+                name: 123,
+                pay: () => {
+                    alert('给你500元')
+                }
+            }
+        },
+
+        template:
+            `
+        <h2>Hello World</h2>
+        <son :name="name"/>
+        `
+    })
+
+    // 父子组件传值，通过props
+    // 对父子组件传递的值的校验
+    // 可以校验的类型String Boolean Array Object Function Symbol
+    // 校验必须传值 required:true代表属性是必须的
+
+    // 如果用户不填，直接给一个默认值
+    app.component('son', {
+        // props: ['name'], 
+        props: {
+            name: {
+                type: String,
+                // required: true
+                //  default:'hello world' 默认值
+                // 更详细的校验 需要使用validator
+                validator: function (value) {
+                    return value.search("hello") != -1
+                }
+            }
+        },
+        template: `<div>{{name}}</div>`
+    })
+
+    app.mount("#app")
+</script>
+
+</html>
