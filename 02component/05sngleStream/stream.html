@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.2/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+    // 一个组件本质上是一个拥有预定义选项的vue实例
+
+    const app = Vue.createApp({
+
+        // 动态传值
+        data() {
+            return {
+                counter: 0
+            }
+        },
+
+        template:
+            `
+        <h2>Hello World</h2>
+        <Counter :counter="counter"/>
+        `
+    })
+
+    // 单向数据流
+    // 可以简单的理解为数据从父级组件传递给子组件，只能单向绑定
+    // 子组件内部不能直接修改父组件传递过来的数据
+    // 单向数据流保证了组件之间是相互独立的
+    app.component('Counter', {
+        // props: ['name'], 
+        props: ['counter'],
+
+        data() {
+            return {
+                newCounter: this.counter
+            }
+        },
+
+        template: `<div>{{counter}}<button @click="counter+=1">增加数量 </div>`
+    })
+
+    app.mount("#app")
+</script>
+
+</html>
