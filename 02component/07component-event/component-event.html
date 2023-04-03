@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.2/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+    // 一个组件本质上是一个拥有预定义选项的vue实例
+
+    const app = Vue.createApp({
+
+        // 动态传值
+        data() {
+            return {
+                counter: 0
+            }
+        },
+        methods: {
+            handleAddContent(param) {
+                this.counter += param
+            }
+        },
+        template:
+            `
+        <h2>Hello World</h2>
+        <Counter :counter="counter" @add="handleAddCounter"/>
+        `
+    })
+
+    // 单向数据流
+    // 可以简单的理解为数据从父级组件传递给子组件，只能单向绑定
+    // 子组件内部不能直接修改父组件传递过来的数据
+    // 单向数据流保证了组件之间是相互独立的
+
+    // 子组件调用父组件事件或方法的编写
+    // 子组件向父组件传递参数
+    // 传递参数，如何进行校验
+    app.component('Counter', {
+        // props: ['name'], 
+        props: ['counter'],
+        // emits: ['add'], // 使用this.$emit需要先声明
+        // 对参数进行校验
+        emits: {
+            add: (value) => {
+                return value < 20 ? true : false
+            }
+        },
+        methods: {
+            handleClick() {
+                this.$emit('add', 2) // 子组件传递参数
+            }
+        },
+        template: `<div>{{counter}}<button @click="handleClick">增加数量 </div>`
+    })
+
+    app.mount("#app")
+</script>
+
+</html>

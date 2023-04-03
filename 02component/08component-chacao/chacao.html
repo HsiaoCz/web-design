@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.2/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+    // 一个组件本质上是一个拥有预定义选项的vue实例
+    const app = Vue.createApp({
+
+        // 动态传值
+        data() {
+            return {
+                name: 123,
+            }
+        },
+
+        template:
+            `
+        <h2>Hello World</h2>
+        <Jshi><div style="color:red">谢大脚</div></Jshi>
+        `
+    })
+
+    // 父子组件传值，通过props
+
+    // 插槽 slot 插槽中可以使用普通标签，样式，子组件，动态数据
+    app.component('Jshi', {
+        props: ['name'],
+        template:
+            `
+        <div>
+        <span>经过您慎重的考虑，最终选择了</span>
+        <span>
+            <slot></solt>
+        </span>
+        </div>
+        
+        `
+    })
+
+    app.mount("#app")
+</script>
+
+</html>
