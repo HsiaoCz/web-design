@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.2/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+    // 一个组件本质上是一个拥有预定义选项的vue实例
+    const app = Vue.createApp({
+
+        // 动态传值
+        data() {
+            return {
+                name: 123,
+            }
+        },
+
+        template:
+            `
+        <h2>Hello World</h2>
+        <honglangman>
+         // <template v-slot:one> <div>1.男宾一位，请上座</div></template>
+          <template #one> <div>1.男宾一位，请上座</div></template>
+           <template v-slot:two><div>3.男宾一位，请上二楼</div></template>
+        </honglangman>
+        `
+    })
+
+    // 父子组件传值，通过props
+
+    // 插槽 slot 插槽中可以使用普通标签，样式，子组件，动态数据
+    // 插槽的默认值
+
+    // 具名插槽
+    app.component('Jshi', {
+        props: ['name'],
+        template:
+            `
+        <div>
+        <span>经过您慎重的考虑，最终选择了</span>
+        <span>
+            <slot><div>晓红</div></solt>
+        </span>
+        </div>
+        
+        `
+    })
+
+    app.component('honglangman', {
+        template:
+            `
+        <div>
+            <slot name="one"></slot>
+            <div>2.你选择了大脚为你服务...</div>
+            <slot name="two"></slot>
+        </div>
+        `
+    })
+
+    app.mount("#app")
+</script>
+
+</html>
