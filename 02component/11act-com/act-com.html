@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.2/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+
+    // 动态组件如何使用
+    const app = Vue.createApp({
+        data() {
+
+            return {
+                showComponent: 'dajiao'
+            }
+        },
+
+        methods: {
+
+            handleClick() {
+                this.showComponent = this.showComponent === 'dajiao' ? 'liuying' : 'dajiao';
+            }
+
+        },
+
+        template:
+            `
+        <h2>Hello World</h2>
+       // <dajiao v-show="showComponent==='dajiao'"/>
+       // <liuying v-show="showComponent==='linying'"/>
+
+       <keep-alive>
+       <component :is="showComponent" />
+       </keep-alive>
+        <div><button @click="handleClick">切换佳丽</button>
+        `
+    })
+
+    // 父子组件传值，通过props
+    app.component('dajiao', {
+        template:
+            `
+        <image src="" />
+        `
+    })
+    app.component('linying', {
+        template:
+            `
+        <image src="" />
+        `
+    })
+    app.mount("#app")
+</script>
+
+</html>
