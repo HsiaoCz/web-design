@@ -7,6 +7,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.2/vue.global.js"></script>
+    <style>
+        .animation {
+            animation: leftToRight 3s;
+        }
+
+        @keyframes leftToRight {
+            0% {
+                transform: translateX(0px);
+            }
+
+            25% {
+                transform: translateX(25px);
+            }
+
+            50% {
+                transform: translateX(50px);
+            }
+
+            75% {
+                transform: translateX(25px);
+            }
+
+            100% {
+                transform: translateX(0px);
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -14,11 +41,31 @@
 </body>
 
 <script>
+    // 动画，一个dom元素从一个地方移动到另一个地方
+    // 过渡，dom元素的一个属性缓慢变成另一个属性，这种效果叫做过度效果
+    // 比如一个层从红色缓慢变成黄色，这就是过渡
+    // 动画和过渡经常混合使用
     // 一个组件本质上是一个拥有预定义选项的vue实例
     const app = Vue.createApp({
+        data() {
+            return {
+                isAnimate: {
+                    animation: false
+                }
+            }
+        },
+
+
+        methods: {
+            handleClick() {
+                this.isAnimate.animation = !this.isAnimate.animation
+            }
+        },
+
         template:
             `
-        <h2>Hello World</h2>
+        <h2 class="animation">Hello World</h2>
+        <div><button @click="handleClick">启动/关闭</button></div>
         `
     })
     app.mount("#app")
