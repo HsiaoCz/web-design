@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.2/vue.global.js"></script>
+    <style>
+        @keyframes comein {
+            0% {
+                transform: translateX(-100px);
+            }
+
+            100% {
+                transform: translateX(0px);
+            }
+        }
+
+        @keyframes comeout {
+            0% {
+                transform: translateX(-100px);
+            }
+
+            100% {
+                transform: translateX(0px);
+            }
+        }
+
+        .v-enter-active {
+            animation: comein 1s;
+        }
+
+        .v-leave-active {
+            animation: comeout 1s;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+    // 基础代码
+    // 在动画的部分加上transition 标签
+    // 两个固定的选择器 .v-enter-active表示进入的动画
+    // v-leave-active表示离开的动画
+    const app = Vue.createApp({
+        data() {
+            return {
+                isShow: false
+            }
+        },
+        methods: {
+            handleClick() {
+                this.isShow = !this.isShow
+            }
+        },
+
+        template:
+            `
+            <transition>
+        <h2 v-if="isShow">Hello World</h2>
+            </transition>
+        <button @click="hanldClick">切换动画</button>
+        `
+    })
+    app.mount("#app")
+</script>
+
+</html>
