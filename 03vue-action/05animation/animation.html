@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.2/vue.global.js"></script>
+    <style>
+        .v-enter-from {
+            opacity: 0;
+        }
+
+        .v-enter-to {
+            opacity: 1;
+        }
+
+        .v-leave-from {
+            opacity: 1;
+        }
+
+        .v-leave-to {
+            opacity: 1;
+        }
+
+        .come {
+            transition: opacity 3s ease-out;
+        }
+
+        .go {
+            transition: opacity 3s ease-out;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+    // 部分修改transition标签
+    // 在transition标签上加上name 
+    // 完全自定义 enter-active-class=""
+
+    // 使用第三方动画库 animation.css
+    // 在transition标签里加上animate_animated
+    const app = Vue.createApp({
+        data() {
+            return {
+                isShow: false
+            }
+        },
+        methods: {
+            handleClick() {
+                this.isShow = !this.isShow
+            }
+        },
+
+        template:
+            `
+            <transition 
+              enter-active-class="come"
+              leave-active-class="go"
+            >
+        <h2 v-if="isShow">Hello World</h2>
+            </transition>
+        <button @click="hanldClick">切换过渡</button>
+        `
+    })
+    app.mount("#app")
+</script>
+
+</html>
