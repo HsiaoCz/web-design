@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.2/vue.global.js"></script>
+    <style>
+        .v-enter-form,
+        .v-leave-to {
+            opacity: 0;
+        }
+
+        .v-enter-to,
+        .v-leave-form {
+            opacity: 1;
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: opacity 2s ease-in;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+    // 两个dom 元素如何切换的效果
+    const app = Vue.createApp({
+        data() {
+            return {
+                isShow: false
+            }
+        },
+        methods: {
+            handleClick() {
+                this.isShow = !this.isShow
+            }
+        },
+
+        template:
+            `
+            <transition mode="out-in" appear>
+        <h2 v-if="isShow">大脚进入了试衣间</h2>
+        <h2 v-else="isShow">晓红进入了试衣间</h2>
+            </transition>
+        <button @click="hanldClick">切换动画</button>
+        `
+    })
+    app.mount("#app")
+</script>
+
+</html>
