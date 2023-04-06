@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.2/vue.global.js"></script>
+    <style>
+        @keyframes comein {
+            0% {
+                transform: translateX(-100px);
+            }
+
+            100% {
+                transform: translateX(0px);
+            }
+        }
+
+        @keyframes comeout {
+            0% {
+                transform: translateX(-100px);
+            }
+
+            100% {
+                transform: translateX(0px);
+            }
+        }
+
+        .v-enter-active {
+            animation: comein 3s;
+            transition: opacity 3s ease-out;
+        }
+
+        .v-leave-active {
+            animation: comeout 3s;
+            transition: opacity 3s ease-out;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+    // 过渡和动画的时间冲突
+    // 解决方法，在transition里面加上type="animation"
+    // 意味着冲突时以动画时间为准
+    // 或者时候type="transition" 以过渡时间为准
+
+    // 或者在标签里面加上:duration="1000" 这种方式无论过渡和动画是几秒
+    // 都以标签为准，这里是1s
+
+    // 或者:duration:="{enter:1000,leave:3000}"
+    // 表示进入的时候是1s，离开的时候是3s
+    const app = Vue.createApp({
+        data() {
+            return {
+                isShow: false
+            }
+        },
+        methods: {
+            handleClick() {
+                this.isShow = !this.isShow
+            }
+        },
+
+        template:
+            `
+            <transition type="animation">
+        <h2 v-if="isShow">Hello World</h2>
+            </transition>
+        <button @click="hanldClick">切换动画</button>
+        `
+    })
+    app.mount("#app")
+</script>
+
+</html>
