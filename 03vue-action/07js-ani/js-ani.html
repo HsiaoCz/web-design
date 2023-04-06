@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.2/vue.global.js"></script>
+    <style>
+        @keyframes comein {
+            0% {
+                transform: translateX(-100px);
+            }
+
+            100% {
+                transform: translateX(0px);
+            }
+        }
+
+        @keyframes comeout {
+            0% {
+                transform: translateX(-100px);
+            }
+
+            100% {
+                transform: translateX(0px);
+            }
+        }
+
+        .v-enter-active {
+            animation: comein 1s;
+        }
+
+        .v-leave-active {
+            animation: comeout 1s;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+    // 使用js制作过渡动画
+    const app = Vue.createApp({
+        data() {
+            return {
+                isShow: false
+            }
+        },
+        methods: {
+
+            handleBeforeEnter(element) {
+                element.style.color = "red"
+            },
+
+            handleEnterActive(element, done) {
+                const animation = setInterval(() => {
+                    const color = element.style.color
+                    if (color == 'red') {
+                        element.style.color = 'green'
+                    } else {
+                        element.style.color = 'red'
+                    }
+                }, 500)
+                setTimeout(() => {
+                    clearInterval(animation)
+                    done()
+                }, 1500)
+            },
+
+            handleAfterEnter() {
+                alert("Hello")
+            },
+            handleClick() {
+                this.isShow = !this.isShow
+            }
+        },
+
+        template:
+            `
+            <transition
+            :css="false"
+            @before-enter="handleBeforeEnter"
+            @enter="handleEnterActive"
+            @after-enter="handleAfterEnter"
+            before-leave
+            leave
+            leave-after
+            >
+        <h2 v-if="isShow">Hello World</h2>
+            </transition>
+        <button @click="hanldClick">切换动画</button>
+        `
+    })
+    app.mount("#app")
+</script>
+
+</html>
